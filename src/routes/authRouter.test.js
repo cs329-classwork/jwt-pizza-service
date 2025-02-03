@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 const supertest = require("supertest")
 const app = require("../service")
 const { DB } = require("../database/database")
@@ -47,39 +46,39 @@ test("test create user (sad)", async () => {
 })
 
 test("login user (happy)", async () => {
-    // insert test user into database
-    const user = { name: "pizza diner1", email: "d1@jwt.com", password: "diner1", roles: [{role: 'diner'}] }
-    await DB.addUser(user)
+  // insert test user into database
+  const user = { name: "pizza diner1", email: "d1@jwt.com", password: "diner1", roles: [{ role: 'diner' }] }
+  await DB.addUser(user)
 
-    // send call to service
-    const { email, password } = user
-    const response = await supertest(app).put('/api/auth').send({ email, password })
-    
-    // check status
-    expect(response.status).toBe(200)
+  // send call to service
+  const { email, password } = user
+  const response = await supertest(app).put('/api/auth').send({ email, password })
 
-    expect(response.body).toHaveProperty('user')
-    expect(response.body).toHaveProperty('token')
+  // check status
+  expect(response.status).toBe(200)
 
-    expect(typeof response.body.token).toBe('string')
-    expect(response.body.token.length).toBeGreaterThan(0)
+  expect(response.body).toHaveProperty('user')
+  expect(response.body).toHaveProperty('token')
+
+  expect(typeof response.body.token).toBe('string')
+  expect(response.body.token.length).toBeGreaterThan(0)
 })
 
 test("login user (sad: user doesn't exist)", async () => {
-    const fakeUser = { email: "fakeemail@jwt.com", password: "fakepassword" }
-    const response = await supertest(app).put('/api/auth').send(fakeUser)
+  const fakeUser = { email: "fakeemail@jwt.com", password: "fakepassword" }
+  const response = await supertest(app).put('/api/auth').send(fakeUser)
 
-    expect(response.status).toBe(404)
+  expect(response.status).toBe(404)
 })
 
 test("login user (sad: incorrect password)", async () => {
-    const user = { name: "pizza diner2", email: "d2@jwt.com", password: "diner2", roles: [{role: 'diner'}] }
-    await DB.addUser(user)
+  const user = { name: "pizza diner2", email: "d2@jwt.com", password: "diner2", roles: [{ role: 'diner' }] }
+  await DB.addUser(user)
 
-    // send call to service
-    const badUserInfo = { email: "d2@jwt.com", password: "badPassword"}
-    const response = await supertest(app).put('/api/auth').send(badUserInfo)
+  // send call to service
+  const badUserInfo = { email: "d2@jwt.com", password: "badPassword" }
+  const response = await supertest(app).put('/api/auth').send(badUserInfo)
 
-    expect(response.status).toBe(404)
-    expect(response.body.message).toBe("unknown user")
+  expect(response.status).toBe(404)
+  expect(response.body.message).toBe("unknown user")
 })
