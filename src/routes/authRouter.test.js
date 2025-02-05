@@ -1,6 +1,7 @@
 const supertest = require("supertest")
 const app = require("../service")
 const { DB } = require("../database/database")
+const { generateRandomWord, generateUser } = require("../testUtils")
 
 describe("auth router tests:", () => {
   describe("create user", () => {
@@ -157,33 +158,9 @@ describe("auth router tests:", () => {
         .put(`/api/auth/${loginResponse.body.user.id - 1}`)
         .set("Authorization", `Bearer ${token}`)
         .send({ email: newEmail, password: newPassword })
-      
+
       expect(updateResponse.body.message).toBe("unauthorized")
       expect(updateResponse.status).toBe(403)
     })
   })
 })
-
-function generateUser() {
-  const user = {}
-  const wordLength = 5
-
-  user.name = generateRandomWord(wordLength)
-  user.email =
-    generateRandomWord(wordLength) +
-    "@" +
-    generateRandomWord(wordLength) +
-    ".com"
-  user.password = generateRandomWord(wordLength)
-
-  return user
-}
-
-function generateRandomWord(length) {
-  const letters = "abcdefghijklmnopqrstuvwxyz"
-  let word = ""
-  for (let i = 0; i < length; i++) {
-    word += letters.charAt(Math.floor(Math.random() * letters.length))
-  }
-  return word
-}
