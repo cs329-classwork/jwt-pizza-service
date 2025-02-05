@@ -44,7 +44,7 @@ describe("franchise router tests:", () => {
       const franchise = generateFranchise([])
       const franchiseResponse = await DB.createFranchise(franchise)
 
-      const response = await supertest(app)
+      await supertest(app)
         .delete(`/api/franchise/${franchiseResponse.id}`)
         .set("Authorization", `Bearer ${token}`)
         .expect(200)
@@ -65,7 +65,7 @@ describe("franchise router tests:", () => {
       const franchise = generateFranchise([])
       const franchiseResponse = await DB.createFranchise(franchise)
 
-      const response = await supertest(app)
+      await supertest(app)
         .delete(`/api/franchise/${franchiseResponse.id}`)
         .set("Authorization", `Bearer ${token}`)
         .expect(403)
@@ -87,7 +87,7 @@ describe("franchise router tests:", () => {
 
       const franchise = generateFranchise([{ email: user.email }])
 
-      const response = await supertest(app)
+      await supertest(app)
         .post("/api/franchise")
         .set("Authorization", `Bearer ${token}`)
         .send(franchise)
@@ -108,7 +108,7 @@ describe("franchise router tests:", () => {
 
       const franchise = generateFranchise([{ email: user.email }])
 
-      const response = await supertest(app)
+      await supertest(app)
         .post("/api/franchise")
         .set("Authorization", `Bearer ${token}`)
         .send(franchise)
@@ -138,7 +138,7 @@ describe("franchise router tests:", () => {
         .expect(200)
 
       const store = { name: generateRandomWord() }
-      const response = await supertest(app)
+      await supertest(app)
         .post(`/api/franchise/${franchiseResponse.body.id}/store`)
         .set("Authorization", `Bearer ${token}`)
         .send(store)
@@ -175,7 +175,7 @@ describe("franchise router tests:", () => {
       const token2 = loginResponse2.body.token
 
       const store = { name: generateRandomWord() }
-      const response = await supertest(app)
+      await supertest(app)
         .post(`/api/franchise/${franchiseResponse.body.id}/store`)
         .set("Authorization", `Bearer ${token2}`)
         .send(store)
@@ -211,7 +211,7 @@ describe("franchise router tests:", () => {
         .send(store)
         .expect(200)
 
-      const response = await supertest(app)
+      await supertest(app)
         .delete(
           `/api/franchise/${franchiseResponse.body.id}/store/${storeResponse.id}`
         )
@@ -255,7 +255,7 @@ describe("franchise router tests:", () => {
         .send({ email: newUser.email, password: newUser.password })
       const token2 = loginResponse2.body.token
 
-      const response = await supertest(app)
+      await supertest(app)
         .delete(
           `/api/franchise/${franchiseResponse.body.id}/store/${storeResponse.id}`
         )

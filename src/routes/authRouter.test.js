@@ -111,7 +111,7 @@ describe("auth router tests:", () => {
       expect(await DB.isLoggedIn(token)).toBe(true)
 
       // logout user
-      const response = await supertest(app)
+      await supertest(app)
         .delete("/api/auth")
         .set("Authorization", `Bearer ${token}`)
 
@@ -134,7 +134,7 @@ describe("auth router tests:", () => {
 
       const newEmail = generateRandomWord(20)
       const newPassword = generateRandomWord(20)
-      const updateResponse = await supertest(app)
+      await supertest(app)
         .put(`/api/auth/${loginResponse.body.user.id}`)
         .set("Authorization", `Bearer ${token}`)
         .send({ email: newEmail, password: newPassword })
