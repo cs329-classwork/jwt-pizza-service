@@ -73,8 +73,8 @@ function systemMetrics(buf) {
   const cpuUsage = getCpuUsagePercentage()
   const memoryUsage = getMemoryUsagePercentage()
 
-  cpuMetric = buildGaugeMetric("cpuUsage", "%", cpuUsage)
-  memoryMetric = buildGaugeMetric("memoryUsage", "%", memoryUsage)
+  const cpuMetric = buildGaugeMetric("cpuUsage", "%", cpuUsage)
+  const memoryMetric = buildGaugeMetric("memoryUsage", "%", memoryUsage)
 
   buf.push(cpuMetric)
   buf.push(memoryMetric)
@@ -185,7 +185,7 @@ function requestMetricMiddleware(req, res, next) {
     // if (req.path === "/api/order" && req.method === "POST") {
     if (req.originalUrl === "/api/order") {
       // get number of pizzas from request
-      const numPizzas = req.body.items.reduce((n, _) => n + 1, 0)
+      const numPizzas = req.body.items.length
       // get total revenue of request
       const revenue = req.body.items.reduce((n, curr) => n + curr.price, 0)
 
