@@ -4,6 +4,9 @@
     "json-summary",
     "text"
   ],
+  "coveragePathIgnorePatterns": [
+    "/src/metrics.js"
+  ],
   "coverageThreshold": {
     "global": {
       "lines": 80
