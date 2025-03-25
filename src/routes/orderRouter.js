@@ -88,7 +88,6 @@ orderRouter.post(
     const r = await fetch(`${config.factory.url}/api/order`, createPizzaReq);
     const j = await r.json();
     
-    // TODO: log factory calls
     const infoLevel = logger.statusToLogLevel(j.statusCode)
     const logData = {
       path: r.url,

@@ -1,6 +1,7 @@
 class StatusCodeError extends Error {
   constructor(message, statusCode) {
     super(message);
+    logger.unhandledErrorLogger(message);
     this.statusCode = statusCode;
   }
 }
