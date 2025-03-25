@@ -232,7 +232,7 @@ function sendMetricsToGrafana(metricsBuffer) {
         console.error(`Failed to push metrics: ${text}`)
         console.log(allMetricsBody)
       } else {
-        console.log(`Pushed metrics`)
+        // console.log(`Pushed metrics`)
       }
     })
     .catch((err) => {
