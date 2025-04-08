@@ -1,8 +1,6 @@
 // middleware that produces/sends logs
 const config = require('./config');
 
-// TODO: figure out how to log unhandled exceptions
-
 class Logger {
   httpLogger = (req, res, next) => {
     let send = res.send;
@@ -28,7 +26,7 @@ class Logger {
   }
 
   unhandledErrorLogger(err) {
-    this.log('error', 'unhandledError', { message: err.message, status: err.statusCode });
+    this.log('error', 'unhandledError', { message: err, statusCode: 500 });
   }
 
   log(level, type, logData) {
