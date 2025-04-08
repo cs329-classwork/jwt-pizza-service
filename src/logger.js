@@ -10,6 +10,7 @@ class Logger {
         path: req.originalUrl,
         method: req.method,
         statusCode: res.statusCode,
+        ip: res.ip,
         "req": JSON.stringify(req.body),
         "res": JSON.stringify(resBody),
       };
