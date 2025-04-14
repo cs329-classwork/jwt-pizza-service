@@ -80,17 +80,13 @@ class DB {
   async updateUser(userId, email, password) {
     const connection = await this.getConnection();
     try {
-      const params = [];
-      if (password) {
-        const hashedPassword = await bcrypt.hash(password, 10);
-        params.push(`password='${hashedPassword}'`);
+      if (!password || !email) {
+        throw new StatusCodeError('Incorrect parameter usage.', )
       }
-      if (email) {
-        params.push(`email='${email}'`);
-      }
+      const hashedPassword = await bcrypt.hash(password, 10);
       if (params.length > 0) {
-        const query = `UPDATE user SET ${params.join(', ')} WHERE id=${userId}`;
-        await this.query(connection, query);
+        const query = `UPDATE user SET email=?, password=? WHERE id=?`;
+        await this.query(connection, query, [email, hashedPassword, userId]);
       }
       return this.getUser(email, password);
     } finally {
